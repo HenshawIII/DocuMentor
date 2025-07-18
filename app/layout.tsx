@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+'use client'
+// import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { UserProvider } from "./contexts/UserContext";
@@ -13,10 +14,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "DocuMentor - Document Intelligence Platform",
-  description: "Upload documents and chat with them using AI",
-};
+// export const metadata: Metadata = {
+//   title: "DocuMentor - Document Intelligence Platform",
+//   description: "Upload documents and chat with them using AI",
+// };
 
 export default function RootLayout({
   children,
@@ -25,6 +26,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <title>DocuMentor - Document Intelligence Platform</title>
+        <link rel="icon" href="/doc.png" />
+        <meta name="description" content="Upload documents and chat with them using AI" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
