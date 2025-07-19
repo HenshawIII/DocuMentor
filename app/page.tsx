@@ -115,9 +115,9 @@ export default function Home() {
                   1
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Upload Documents</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Sign In</h3>
                   <p className="text-gray-600">
-                    Upload your PDF or text files through our secure interface
+                    Create account and sign in to upload documents
                   </p>
                 </div>
               </div>
