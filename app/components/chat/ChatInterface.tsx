@@ -192,7 +192,7 @@ export default function ChatInterface() {
     setIsLoading(true);
 
     try {
-        console.log(user.id, selectedDoc.id, inputMessage);
+        // console.log(user.id, selectedDoc.id, inputMessage);
               const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/api/user/chat`, {
           method: 'POST',
           credentials: 'include',

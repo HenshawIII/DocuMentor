@@ -52,7 +52,7 @@ export default function SignupForm() {
           setMessage(userError.message);
         } else {
           setMessage('Signup successful! Please check your email for verification.');
-          router.push('/chat');
+          router.push('/');
         }
         // setMessage('Signup successful! Please check your email for verification.');
         // Clear form
