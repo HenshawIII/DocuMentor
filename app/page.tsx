@@ -168,7 +168,7 @@ export default function Home() {
           </p>
           <Link
             href={user ? '/upload' : '/signup'}
-            className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-medium text-lg transition-colors"
+            className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 hover:text-blue-200 font-medium text-lg transition-colors"
           >
          {user ? 'Go to start' : 'Start Free Trial'}
           </Link>
