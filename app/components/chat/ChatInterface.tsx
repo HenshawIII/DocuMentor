@@ -3,9 +3,10 @@
 import { useState, useRef, useEffect } from 'react';
 import { useUser } from '@/app/contexts/UserContext';
 import supabase from '@/app/supabase';
-import Navigation from '@/app/components/Navigation';
+import Navbar from '@/app/New/Navbar';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import Link from 'next/link';
 
 interface Message {
   id: string;
@@ -253,28 +254,35 @@ export default function ChatInterface() {
   };
 
   return (
-    <div className="h-screen flex flex-col">
+    <div className="h-screen flex flex-col bg-black relative overflow-hidden">
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-indigo-900/20"></div>
+      
+      {/* Animated background elements */}
+      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+
       {/* Desktop Navigation - Only visible on large screens */}
-      <div className="hidden lg:block">
-        <Navigation />
+      <div className="hidden lg:block relative z-10">
+        {/* <Navbar /> */}
       </div>
 
       {/* Mobile Header with Hamburger - Only visible on small screens */}
-      <div className="lg:hidden bg-white border-b border-gray-200 px-4 py-3">
+      <div className="lg:hidden bg-white/10 backdrop-blur-lg border-b border-white/20 px-4 py-3 relative z-10">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="p-2 rounded-md hover:bg-gray-100 transition-colors"
+              className="p-2 rounded-md hover:bg-white/10 transition-colors"
             >
-              <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
             <div>
-              <h1 className="text-lg font-semibold text-gray-800">RAG Chat</h1>
+              <h1 className="text-lg font-semibold text-white">RAG Chat</h1>
               {selectedDoc && (
-                <p className="text-sm text-gray-600 truncate">Chatting with: {selectedDoc.name.slice(0, 7)}...</p>
+                <p className="text-sm text-gray-300 truncate">Chatting with: {selectedDoc.name.slice(0, 7)}...</p>
               )}
             </div>
           </div>
@@ -282,7 +290,7 @@ export default function ChatInterface() {
           {selectedDoc && messages.length > 0 && (
             <button
               onClick={() => setShowClearModal(true)}
-              className="p-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-md transition-colors"
+              className="p-2 text-red-400 hover:text-red-300 hover:bg-red-500/20 rounded-md transition-colors"
               title="Clear chat history"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -293,25 +301,25 @@ export default function ChatInterface() {
         </div>
       </div>
 
-      <div className="flex-1 flex bg-gray-50">
+      <div className="flex-1 flex relative z-10 ">
         {/* Desktop Sidebar - Only visible on large screens */}
-        <div className="hidden lg:flex w-80 bg-white border-r border-gray-200 flex-col">
-          <div className="p-4 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-800">Your Documents</h2>
-            <p className="text-sm text-gray-600 mt-1">Select a document to chat with</p>
+        <div className="hidden lg:flex w-80 bg-white/10 backdrop-blur-lg border-r border-white/20 flex-col">
+          <div className="p-4 border-b border-white/20">
+            <h2 className="text-lg font-semibold text-white">Your Documents</h2>
+            <p className="text-sm text-gray-300 mt-1">Select a document to chat with</p>
           </div>
           
           <div className="flex-1 overflow-y-auto p-4">
             {isLoadingDocs ? (
               <div className="flex items-center justify-center py-8">
-                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
-                <span className="ml-2 text-gray-600">Loading documents...</span>
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-purple-500"></div>
+                <span className="ml-2 text-gray-300">Loading documents...</span>
               </div>
             ) : userDocs.length === 0 ? (
               <div className="text-center py-8">
                 <div className="text-4xl mb-2">📄</div>
-                <p className="text-gray-500 text-sm">No documents available</p>
-                <p className="text-gray-400 text-xs mt-1">Upload documents to start chatting</p>
+                <p className="text-gray-400 text-sm">No documents available</p>
+                <p className="text-gray-500 text-xs mt-1">Upload documents to start chatting</p>
               </div>
             ) : (
               <div className="space-y-2">
@@ -319,17 +327,17 @@ export default function ChatInterface() {
                   <button
                     key={doc.id}
                     onClick={() => handleDocumentSelect(doc)}
-                    className={`w-full text-left p-3 rounded-lg transition-colors ${
+                    className={`w-full text-left p-3 rounded-xl transition-all duration-300 ${
                       selectedDoc?.id === doc.id
-                        ? 'bg-blue-50 border border-blue-200 text-blue-800'
-                        : 'hover:bg-gray-50 border border-transparent'
+                        ? 'bg-purple-500/20 border border-purple-400/30 text-white'
+                        : 'hover:bg-white/10 border border-transparent text-gray-300 hover:text-white'
                     }`}
                   >
                     <div className="flex items-center">
                       <div className="text-2xl mr-3">📄</div>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium truncate">{doc.name}</p>
-                        <p className="text-xs text-gray-500 truncate">ID: {doc.id}</p>
+                        <p className="text-xs text-gray-400 truncate">ID: {doc.id}</p>
                       </div>
                     </div>
                   </button>
@@ -344,38 +352,38 @@ export default function ChatInterface() {
           <div className="lg:hidden fixed inset-0 z-50">
             {/* Backdrop */}
             <div 
-              className="absolute inset-0 bg-black bg-opacity-50"
+              className="absolute inset-0 bg-black bg-opacity-70"
               onClick={() => setIsSidebarOpen(false)}
             />
             
             {/* Sidebar */}
-            <div className="absolute left-0 top-0 h-full w-80 bg-white shadow-lg">
-              <div className="p-4 border-b border-gray-200">
+            <div className="absolute left-0 top-0 h-full w-80 bg-white/10 backdrop-blur-lg border-r border-white/20 shadow-2xl">
+              <div className="p-4 border-b border-white/20">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-lg font-semibold text-gray-800">Your Documents</h2>
+                  <h2 className="text-lg font-semibold text-white">Your Documents</h2>
                   <button
                     onClick={() => setIsSidebarOpen(false)}
-                    className="p-2 rounded-md hover:bg-gray-100 transition-colors"
+                    className="p-2 rounded-md hover:bg-white/10 transition-colors"
                   >
-                    <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
                 </div>
-                <p className="text-sm text-gray-600 mt-1">Select a document to chat with</p>
+                <p className="text-sm text-gray-300 mt-1">Select a document to chat with</p>
               </div>
               
               <div className="flex-1 overflow-y-auto p-4">
                 {isLoadingDocs ? (
                   <div className="flex items-center justify-center py-8">
-                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
-                    <span className="ml-2 text-gray-600">Loading documents...</span>
+                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-purple-500"></div>
+                    <span className="ml-2 text-gray-300">Loading documents...</span>
                   </div>
                 ) : userDocs.length === 0 ? (
                   <div className="text-center py-8">
                     <div className="text-4xl mb-2">📄</div>
-                    <p className="text-gray-500 text-sm">No documents available</p>
-                    <p className="text-gray-400 text-xs mt-1">Upload documents to start chatting</p>
+                    <p className="text-gray-400 text-sm">No documents available</p>
+                    <p className="text-gray-500 text-xs mt-1">Upload documents to start chatting</p>
                   </div>
                 ) : (
                   <div className="space-y-2">
@@ -386,23 +394,28 @@ export default function ChatInterface() {
                           handleDocumentSelect(doc);
                           setIsSidebarOpen(false);
                         }}
-                        className={`w-full text-left p-3 rounded-lg transition-colors ${
+                        className={`w-full text-left p-3 rounded-xl transition-all duration-300 ${
                           selectedDoc?.id === doc.id
-                            ? 'bg-blue-50 border border-blue-200 text-blue-800'
-                            : 'hover:bg-gray-50 border border-transparent'
+                            ? 'bg-purple-500/20 border border-purple-400/30 text-white'
+                            : 'hover:bg-white/10 border border-transparent text-gray-300 hover:text-white'
                         }`}
                       >
                         <div className="flex items-center">
                           <div className="text-2xl mr-3">📄</div>
                           <div className="flex-1 min-w-0">
                             <p className="text-sm font-medium truncate">{doc.name}</p>
-                            <p className="text-xs text-gray-500 truncate">ID: {doc.id}</p>
+                            <p className="text-xs text-gray-400 truncate">ID: {doc.id}</p>
                           </div>
                         </div>
                       </button>
                     ))}
                   </div>
                 )}
+              </div>
+              <div className='absolute bottom-6 left-4 w-full flex items-center space-x-6 text-lg'>
+                <Link href="/" className='text-white hover:text-gray-300 transition-colors'>Home</Link>
+                <Link href="/documents" className='text-white hover:text-gray-300 transition-colors'>Docs</Link>
+               
               </div>
             </div>
           </div>
@@ -411,32 +424,39 @@ export default function ChatInterface() {
         {/* Chat Area */}
         <div className="flex-1 flex flex-col">
           {/* Desktop Header - Only visible on large screens */}
-          <div className="hidden lg:block bg-white shadow-sm border-b px-6 py-4">
+          <div className="hidden lg:block bg-white/10 backdrop-blur-lg border-b border-white/20 px-6 py-4">
             <div className="flex items-center justify-between">
               <div>
                 {selectedDoc ? (
                   <div>
-                    <h1 className="text-xl font-semibold text-gray-800">
+                    <h1 className="text-xl font-semibold text-white">
                       Chat with: {selectedDoc.name}
                     </h1>
-                    <p className="text-sm text-gray-600 mt-1">
+                    <p className="text-sm text-gray-300 mt-1">
                       Ask questions about this document
                     </p>
                   </div>
                 ) : (
-                  <div>
-                    <h1 className="text-xl font-semibold text-gray-800">Select a Document</h1>
-                    <p className="text-sm text-gray-600 mt-1">
+                  <div className=''>
+                    <h1 className="text-xl font-semibold text-white">Select a Document</h1>
+                    <p className="text-sm text-gray-300 mt-1">
                       Choose a document from the sidebar to start chatting
                     </p>
                   </div>
                 )}
               </div>
+
+              <div className='flex items-center space-x-4 '>
+                <Link href="/" className='text-white hover:text-gray-300 transition-colors'>Home</Link>
+                <Link href="/docs" className='text-white hover:text-gray-300 transition-colors'>Docs</Link>
+             
+               
+              </div>
               
               {selectedDoc && messages.length > 0 && (
                 <button
                   onClick={() => setShowClearModal(true)}
-                  className="px-4 py-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-md transition-colors flex items-center space-x-2"
+                  className="px-4 py-2 text-red-400 hover:text-red-300 hover:bg-red-500/20 rounded-lg transition-colors flex items-center space-x-2"
                   title="Clear chat history"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -451,15 +471,15 @@ export default function ChatInterface() {
           {/* Messages Container */}
           <div className="flex-1 overflow-y-auto p-6 space-y-4 pb-20">
             {!selectedDoc ? (
-              <div className="text-center text-gray-500 mt-8">
+              <div className="text-center text-gray-400 mt-8">
                 <div className="text-6xl mb-4">💬</div>
-                <h3 className="text-lg font-medium mb-2">Select a document</h3>
+                <h3 className="text-lg font-medium mb-2 text-white">Select a document</h3>
                 <p className="text-sm">Choose a document from the sidebar to start chatting</p>
               </div>
             ) : messages.length === 0 ? (
-              <div className="text-center text-gray-500 mt-8">
+              <div className="text-center text-gray-400 mt-8">
                 <div className="text-6xl mb-4">💬</div>
-                <h3 className="text-lg font-medium mb-2">Start a conversation</h3>
+                <h3 className="text-lg font-medium mb-2 text-white">Start a conversation</h3>
                 <p className="text-sm">Ask questions about {selectedDoc.name}</p>
               </div>
             ) : (
@@ -469,13 +489,13 @@ export default function ChatInterface() {
                   className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
+                    className={`max-w-xs lg:max-w-md px-4 py-2 rounded-xl ${
                       message.isUser
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-white text-gray-800 border border-gray-200'
+                        ? 'bg-gradient-to-r from-[#8F72D0] to-[#347FB0] text-white'
+                        : 'bg-white/10 backdrop-blur-lg text-white border border-white/20'
                     }`}
                   >
-                    <div className={`text-sm ${message.isUser ? 'text-white' : 'text-gray-800'}`}>
+                    <div className={`text-sm ${message.isUser ? 'text-white' : 'text-white'}`}>
                       <ReactMarkdown 
                         remarkPlugins={[remarkGfm]}
                         components={{
@@ -490,8 +510,8 @@ export default function ChatInterface() {
                           code: ({ children, className }) => (
                             <code className={`px-1 py-0.5 rounded text-xs font-mono ${
                               message.isUser 
-                                ? 'bg-blue-500 text-white' 
-                                : 'bg-gray-100 text-gray-800'
+                                ? 'bg-white/20 text-white' 
+                                : 'bg-white/20 text-white'
                             }`}>
                               {children}
                             </code>
@@ -499,8 +519,8 @@ export default function ChatInterface() {
                           pre: ({ children }) => (
                             <pre className={`p-2 rounded text-xs font-mono overflow-x-auto ${
                               message.isUser 
-                                ? 'bg-blue-500 text-white' 
-                                : 'bg-gray-100 text-gray-800'
+                                ? 'bg-white/20 text-white' 
+                                : 'bg-white/20 text-white'
                             }`}>
                               {children}
                             </pre>
@@ -508,8 +528,8 @@ export default function ChatInterface() {
                           blockquote: ({ children }) => (
                             <blockquote className={`border-l-4 pl-3 italic ${
                               message.isUser 
-                                ? 'border-blue-400' 
-                                : 'border-gray-300'
+                                ? 'border-white/40' 
+                                : 'border-white/40'
                             }`}>
                               {children}
                             </blockquote>
@@ -521,8 +541,8 @@ export default function ChatInterface() {
                               rel="noopener noreferrer"
                               className={`underline hover:no-underline ${
                                 message.isUser 
-                                  ? 'text-blue-200 hover:text-blue-100' 
-                                  : 'text-blue-600 hover:text-blue-800'
+                                  ? 'text-white/80 hover:text-white' 
+                                  : 'text-purple-300 hover:text-purple-200'
                               }`}
                             >
                               {children}
@@ -534,7 +554,7 @@ export default function ChatInterface() {
                       </ReactMarkdown>
                     </div>
                     <p className={`text-xs mt-1 ${
-                      message.isUser ? 'text-blue-100' : 'text-gray-500'
+                      message.isUser ? 'text-white/70' : 'text-gray-400'
                     }`}>
                       {formatTime(message.timestamp)}
                     </p>
@@ -545,11 +565,11 @@ export default function ChatInterface() {
             
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-white text-gray-800 border border-gray-200 px-4 py-2 rounded-lg">
+                <div className="bg-white/10 backdrop-blur-lg text-white border border-white/20 px-4 py-2 rounded-xl">
                   <div className="flex space-x-1">
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
+                    <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                    <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                   </div>
                 </div>
               </div>
@@ -559,23 +579,23 @@ export default function ChatInterface() {
           </div>
 
           {/* Input Form */}
-          <div className="bg-white border-t p-4 fixed bottom-0 w-full ">
+          <div className="bg-white/10 backdrop-blur-lg border-t border-white/20 p-4 fixed bottom-0 w-full">
             <form onSubmit={handleSubmit} className="flex space-x-4">
               <input
                 type="text"
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 placeholder={selectedDoc ? `Ask a question about ${selectedDoc.name}...` : "Select a document to chat..."}
-                className="flex-1 p-3 border text-gray-700 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="flex-1 p-3 bg-white/5 border border-white/20 text-white placeholder-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
                 disabled={isLoading || !selectedDoc}
               />
               <button
                 type="submit"
                 disabled={!inputMessage.trim() || isLoading || !selectedDoc}
-                className={`px-6 py-3 rounded-lg font-medium transition-colors ${
+                className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 transform ${
                   inputMessage.trim() && !isLoading && selectedDoc
-                    ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                    ? 'bg-gradient-to-r from-[#8F72D0] to-[#347FB0] hover:from-[#7A5FBA] hover:to-[#2D6BA0] text-white hover:scale-105 shadow-lg hover:shadow-xl'
+                    : 'bg-gray-600 text-gray-400 cursor-not-allowed'
                 }`}
               >
                 {isLoading ? 'Sending...' : 'Send'}
@@ -587,32 +607,32 @@ export default function ChatInterface() {
 
       {/* Clear Chat Confirmation Modal */}
       {showClearModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+          <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-6 max-w-md w-full mx-4 shadow-2xl">
             <div className="flex items-center mb-4">
-              <div className="text-red-500 mr-3">
+              <div className="text-red-400 mr-3">
                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900">Clear Chat History</h3>
+              <h3 className="text-lg font-semibold text-white">Clear Chat History</h3>
             </div>
             
-            <p className="text-gray-600 mb-6">
-              Are you sure you want to clear the chat history for <strong>"{selectedDoc?.name}"</strong>? 
+            <p className="text-gray-300 mb-6">
+              Are you sure you want to clear the chat history for <strong className="text-white">"{selectedDoc?.name}"</strong>? 
               This action cannot be undone and will remove all messages from this conversation.
             </p>
             
             <div className="flex space-x-3">
               <button
                 onClick={handleClearChatCancel}
-                className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors"
+                className="flex-1 px-4 py-3 border border-white/30 text-gray-300 rounded-xl hover:bg-white/10 transition-all duration-300"
               >
                 Cancel
               </button>
               <button
                 onClick={handleClearChat}
-                className="flex-1 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+                className="flex-1 px-4 py-3 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-all duration-300"
               >
                 Clear Chat
               </button>

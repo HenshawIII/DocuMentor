@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useUser } from '@/app/contexts/UserContext';
-import Navigation from '@/app/components/Navigation';
+import Navbar from '@/app/New/Navbar';
 import supabase from '@/app/supabase';
 
 export default function UploadPage() {
@@ -194,33 +194,51 @@ export default function UploadPage() {
 
   if (!user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-800 mb-4">Please Login</h1>
-          <p className="text-gray-600 mb-4">You need to be logged in to upload documents.</p>
-          <a href="/login" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md">
-            Go to Login
-          </a>
+      <>
+        <Navbar />
+        <div className="min-h-screen bg-black flex items-center justify-center relative xl:pt-28 py-20 overflow-hidden">
+          {/* Background gradient */}
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-indigo-900/20"></div>
+          
+          {/* Animated background elements */}
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          
+          <div className="relative z-10 text-center">
+            <h1 className="text-2xl font-semibold text-white mb-4">Please Login</h1>
+            <p className="text-gray-400 mb-6">You need to be logged in to upload documents.</p>
+            <a href="/login" className="inline-block bg-gradient-to-r from-[#8F72D0] to-[#347FB0] hover:from-[#7A5FBA] hover:to-[#2D6BA0] text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+              Go to Login
+            </a>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navigation />
-      <div className="max-w-4xl mx-auto py-8 px-4">
-        <div className="bg-white p-8 rounded-lg shadow-lg">
-          <h1 className="text-center text-2xl font-bold text-gray-800 mb-8">
+    <div className="min-h-screen bg-black relative xl:pt-28 py-20 overflow-hidden">
+      <Navbar />
+      
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-indigo-900/20"></div>
+      
+      {/* Animated background elements */}
+      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      
+      <div className="relative z-10 max-w-4xl mx-auto py-8 px-4">
+        <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 shadow-2xl">
+          <h1 className="text-center text-2xl font-semibold text-white mb-8">
             Upload Documents
           </h1>
           
           {/* Document Limit Warning */}
           {userDocs.length >= 2 && (
-            <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-md">
+            <div className="mb-6 p-4 bg-yellow-500/20 border border-yellow-500/30 rounded-xl">
               <div className="flex items-center">
-                <div className="text-yellow-600 mr-2">⚠️</div>
-                <p className="text-yellow-800">
+                <div className="text-yellow-400 mr-2">⚠️</div>
+                <p className="text-yellow-300">
                   You have reached the maximum limit of 2 documents. Please delete an existing document before uploading a new one.
                 </p>
               </div>
@@ -230,18 +248,18 @@ export default function UploadPage() {
           {/* Current Documents Section */}
           {!isLoadingDocs && userDocs.length > 0 && (
             <div className="mb-8">
-              <h2 className="text-lg font-semibold text-gray-800 mb-4">Your Documents ({userDocs.length}/2)</h2>
+              <h2 className="text-lg font-semibold text-white mb-4">Your Documents ({userDocs.length}/2)</h2>
               <div className="grid gap-3">
                 {userDocs.map((doc, index) => (
-                  <div key={index} className="flex items-center p-3 bg-gray-50 rounded-md">
+                  <div key={index} className="flex items-center p-4 bg-white/5 border border-white/20 rounded-xl">
                     <div className="text-2xl mr-3">📄</div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium text-gray-800">{doc.name.slice(0, 20)}...</p>
-                      <p className="text-xs text-gray-500">ID: {doc.id}</p>
+                      <p className="text-sm font-medium text-white">{doc.name.slice(0, 20)}...</p>
+                      <p className="text-xs text-gray-400">ID: {doc.id}</p>
                     </div>
                     <button
                       onClick={() => handleDeleteClick(doc)}
-                      className="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-md transition-colors"
+                      className="p-2 text-red-400 hover:text-red-300 hover:bg-red-500/20 rounded-lg transition-colors"
                       title="Delete document"
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -256,17 +274,17 @@ export default function UploadPage() {
           
           {/* Loading State for Documents */}
           {isLoadingDocs && (
-            <div className="mb-8 p-4 bg-gray-50 rounded-md">
+            <div className="mb-8 p-4 bg-white/5 border border-white/20 rounded-xl">
               <div className="flex items-center justify-center">
-                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
-                <span className="ml-2 text-gray-600">Loading your documents...</span>
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-purple-500"></div>
+                <span className="ml-2 text-gray-300">Loading your documents...</span>
               </div>
             </div>
           )}
           
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="file-input" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="file-input" className="block text-sm font-medium text-gray-200 mb-2">
                 Select PDF or Text File:
               </label>
               <input
@@ -275,17 +293,17 @@ export default function UploadPage() {
                 accept=".pdf,.txt"
                 onChange={handleFileChange}
                 disabled={userDocs.length >= 2}
-                className={`w-full p-3 border-2 border-dashed text-gray-500 rounded-md transition-colors ${
+                className={`w-full p-4 border-2 border-dashed text-gray-300 rounded-xl transition-all duration-300 ${
                   userDocs.length >= 2
-                    ? 'border-gray-200 bg-gray-100 cursor-not-allowed'
-                    : 'border-gray-300 bg-gray-50 hover:border-gray-400 focus:outline-none focus:border-blue-500'
+                    ? 'border-gray-600 bg-white/5 cursor-not-allowed'
+                    : 'border-white/30 bg-white/5 hover:border-purple-500 focus:outline-none focus:border-purple-500'
                 }`}
               />
             </div>
             
             {file && (
-              <div className="p-3 bg-green-50 border border-green-200 rounded-md">
-                <p className="text-sm text-green-800">
+              <div className="p-4 bg-green-500/20 border border-green-500/30 rounded-xl">
+                <p className="text-sm text-green-300">
                   Selected: {file.name}
                 </p>
               </div>
@@ -294,10 +312,10 @@ export default function UploadPage() {
             <button
               type="submit"
               disabled={!file || isLoading || userDocs.length >= 2}
-              className={`w-full py-3 px-4 rounded-md font-medium transition-colors ${
+              className={`w-full py-4 px-6 rounded-xl font-medium transition-all duration-300 transform ${
                 file && !isLoading && userDocs.length < 2
-                  ? 'bg-blue-600 hover:bg-blue-700 text-white cursor-pointer'
-                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  ? 'bg-gradient-to-r from-[#8F72D0] to-[#347FB0] hover:from-[#7A5FBA] hover:to-[#2D6BA0] text-white cursor-pointer hover:scale-105 shadow-lg hover:shadow-xl'
+                  : 'bg-gray-600 text-gray-400 cursor-not-allowed'
               }`}
             >
               {isLoading ? 'Uploading...' : userDocs.length >= 2 ? 'Document Limit Reached' : 'Upload File'}
@@ -305,10 +323,10 @@ export default function UploadPage() {
           </form>
           
           {message && (
-            <div className={`mt-4 p-3 rounded-md text-sm ${
+            <div className={`mt-6 p-4 rounded-xl text-sm ${
               message.includes('successfully')
-                ? 'bg-green-100 border border-green-200 text-green-800'
-                : 'bg-red-100 border border-red-200 text-red-800'
+                ? 'bg-green-500/20 border border-green-500/30 text-green-300'
+                : 'bg-red-500/20 border border-red-500/30 text-red-300'
             }`}>
               {message}
             </div>
@@ -318,19 +336,19 @@ export default function UploadPage() {
 
       {/* Delete Confirmation Modal */}
       {showDeleteModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+          <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-6 max-w-md w-full mx-4 shadow-2xl">
             <div className="flex items-center mb-4">
-              <div className="text-red-500 mr-3">
+              <div className="text-red-400 mr-3">
                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900">Delete Document</h3>
+              <h3 className="text-lg font-semibold text-white">Delete Document</h3>
             </div>
             
-            <p className="text-gray-600 mb-6">
-              Are you sure you want to delete <strong>"{docToDelete?.name}"</strong>? 
+            <p className="text-gray-300 mb-6">
+              Are you sure you want to delete <strong className="text-white">"{docToDelete?.name}"</strong>? 
               This action cannot be undone and will remove the document from your account permanently.
             </p>
             
@@ -338,14 +356,14 @@ export default function UploadPage() {
               <button
                 onClick={handleDeleteCancel}
                 disabled={isDeleting}
-                className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 px-4 py-3 border border-white/30 text-gray-300 rounded-xl hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
               >
                 Cancel
               </button>
               <button
                 onClick={handleDeleteConfirm}
                 disabled={isDeleting}
-                className="flex-1 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 px-4 py-3 bg-red-600 text-white rounded-xl hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
               >
                 {isDeleting ? 'Deleting...' : 'Delete'}
               </button>
