@@ -97,7 +97,7 @@ const Articles = () => {
               <div className="space-y-6 border-t border-white/10 pt-8">
                 {/* Date */}
                 <div className="text-purple-400 font-medium text-sm font-manrope">
-                  June 13, 2025
+                  August 4, 2025
                 </div>
 
                 {/* Article Title */}
@@ -116,7 +116,7 @@ const Articles = () => {
               <div className="space-y-6 border-t border-white/10 pt-8">
                 {/* Date */}
                 <div className="text-purple-400 font-medium text-sm font-manrope">
-                  June 13, 2025
+                  October 3, 2025
                 </div>
 
                 {/* Article Title */}
@@ -135,7 +135,7 @@ const Articles = () => {
               <div className="space-y-6 border-t border-white/10 pt-8">
                 {/* Date */}
                 <div className="text-purple-400 font-medium text-sm font-manrope">
-                  June 13, 2025
+                  March 19, 2025
                 </div>
 
                 {/* Article Title */}
@@ -173,7 +173,7 @@ const Articles = () => {
                 <div className="space-y-6 scale-90 lg:pt-8 pt-2">
                 {/* Date */}
                 <div className="text-purple-400 font-medium text-sm font-manrope">
-                  June 13, 2025
+                  April 20, 2025
                 </div>
 
                 {/* Article Title */}

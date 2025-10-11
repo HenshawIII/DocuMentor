@@ -253,6 +253,30 @@ export default function ChatInterface() {
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
+  if (!user) {
+    return (
+      <>
+        <Navbar />
+        <div className="min-h-screen bg-black flex items-center justify-center relative xl:pt-28 py-20 overflow-hidden">
+          {/* Background gradient */}
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-indigo-900/20"></div>
+          
+          {/* Animated background elements */}
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          
+          <div className="relative z-10 text-center">
+            <h1 className="text-2xl font-semibold text-white mb-4">Please Login</h1>
+            <p className="text-gray-400 mb-6">You need to be logged in to upload documents.</p>
+            <a href="/login" className="inline-block bg-gradient-to-r from-[#8F72D0] to-[#347FB0] hover:from-[#7A5FBA] hover:to-[#2D6BA0] text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+              Go to Login
+            </a>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
     <div className="h-screen flex flex-col bg-black relative overflow-hidden">
       {/* Background gradient */}

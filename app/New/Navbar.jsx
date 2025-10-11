@@ -4,10 +4,12 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import {useUser} from '@/app/contexts/UserContext'
 import { useRouter } from 'next/navigation'
+import LogoutConfirmationModal from '@/app/components/LogoutConfirmationModal'
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false)
   const {user,signOut} = useUser()
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
@@ -27,10 +29,14 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const handleSignOut = async () => {
+  const handleSignOutClick = () => {
+    setIsLogoutModalOpen(true);
+    setIsMobileMenuOpen(false);
+  };
+
+  const handleLogoutConfirm = async () => {
     await signOut();
     window.location.href = '/';
-    setIsMobileMenuOpen(false);
   };
   // const navigate = useNavigate()
   const router = useRouter()
@@ -102,12 +108,25 @@ const Navbar = () => {
             <span className="text-gray-300 group-hover:text-white transition-colors">Chat</span>
           </Link>
           <Link
-            href="/about"
+            href="/pricing"
             className="flex items-center space-x-3 p-3 rounded-xl hover:bg-white/5 transition-all duration-300 group"
             onClick={closeMobileMenu}
           >
-            <span className="text-gray-300 group-hover:text-white transition-colors">About</span>
+            <span className="text-gray-300 group-hover:text-white transition-colors">Pricing</span>
           </Link>
+          
+          {/* Logout button for mobile */}
+          {user && (
+            <button
+              onClick={handleSignOutClick}
+              className="flex items-center space-x-3 p-3 rounded-xl hover:bg-red-500/10 transition-all duration-300 group w-full text-left"
+            >
+              <svg className="w-5 h-5 text-gray-400 group-hover:text-red-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              <span className="text-gray-300 group-hover:text-red-400 transition-colors">Sign Out</span>
+            </button>
+          )}
         </nav>
       </div>
 
@@ -154,10 +173,10 @@ const Navbar = () => {
                About
               </Link>
               <Link
-                href="/#faq"
+                href="/pricing"
                 className="text-white hover:text-gray-300 transition-colors font-manrope font-light text-[16px]"
               >
-                Faq
+                Pricing
               </Link>
             </div>
 
@@ -168,7 +187,7 @@ const Navbar = () => {
               )} */}
               <button
                
-               onClick={user ? handleSignOut : () => {router.push('/signup')}}
+               onClick={user ? handleSignOutClick : () => {router.push('/signup')}}
                className="relative font-medium font-manrope text-[16px] text-white px-6 py-2 rounded-full text-lg overflow-hidden group transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                style={{
                  background: 'linear-gradient(to right, #8F72D0, #347FB0)'
@@ -201,6 +220,13 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
+
+      {/* Logout Confirmation Modal */}
+      <LogoutConfirmationModal
+        isOpen={isLogoutModalOpen}
+        onClose={() => setIsLogoutModalOpen(false)}
+        onConfirm={handleLogoutConfirm}
+      />
     </>
   )
 }

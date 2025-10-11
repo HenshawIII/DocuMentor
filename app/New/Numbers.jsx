@@ -71,7 +71,7 @@ const Numbers = () => {
               className="gradient-text text-8xl sm:text-9xl lg:text-[14rem] font-medium leading-none mb-4"
              
             >
-              20K+
+              30K+
             </div>
             <p className="text-white text-xl sm:text-2xl font-medium">
               The Evian community
@@ -93,7 +93,7 @@ const Numbers = () => {
                 backgroundClip: 'text'
               }}
             >
-              10+
+              11+
             </div>
             <p className="text-white text-xl sm:text-2xl font-medium">
               The Evian countries
@@ -112,7 +112,7 @@ const Numbers = () => {
                 backgroundClip: 'text'
               }}
             >
-              67K+
+              8K+
             </div>
             <p className="text-white text-xl sm:text-2xl font-medium">
               Total requests

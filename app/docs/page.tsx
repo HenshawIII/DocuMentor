@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useUser } from '@/app/contexts/UserContext';
 import Navbar from '@/app/New/Navbar';
 import supabase from '@/app/supabase';
+import Link from 'next/link';
 
 export default function UploadPage() {
   const { user } = useUser();
@@ -239,7 +240,7 @@ export default function UploadPage() {
               <div className="flex items-center">
                 <div className="text-yellow-400 mr-2">⚠️</div>
                 <p className="text-yellow-300">
-                  You have reached the maximum limit of 2 documents. Please delete an existing document before uploading a new one.
+                  You have reached the maximum limit of 2 documents. <Link href={"/pricing"} className='underline underline-offset-6'>Upgrade your account</Link> to upload more.
                 </p>
               </div>
             </div>

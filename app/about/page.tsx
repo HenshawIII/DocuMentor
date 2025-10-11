@@ -3,8 +3,21 @@ import Navbar from '@/app/New/Navbar';
 import Footer from '@/app/New/Footer';
 import Link from 'next/link';
 import CTA from '../New/CTA';
+import {useGSAP} from '@gsap/react'
+import { gsap } from 'gsap'
 
 export default function AboutPage() {
+  
+  useGSAP(() => {
+    gsap.from('.hero-text', {
+      opacity: 0,
+      y: 0,
+      filter: 'blur(20px)',
+      duration: 2,
+      ease: 'power1.inOut'
+    })
+  },[])
+
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
       {/* Background gradient */}
@@ -18,21 +31,42 @@ export default function AboutPage() {
       
       <div className="relative z-10">
         {/* Hero Section */}
-        <section className=" relative overflow-hidden">
-        <div className='absolute -top-[30%] xl:-left-[35%] md:-left-[90%] -left-[40%] -z-0'>
-          <img src={'/Effect24.png'} alt="hero-bg" className='w-[60%] h-[50%] xl:w-full xl:h-full -z-10' />
-        </div>
-        <div className='absolute -bottom-[40%] xl:-right-[18%] md:-right-[50%] -right-[140%] -z-0'>
-          <img src={'/Effect25.png'} alt="hero-bg" className='w-[60%] h-[50%] lg:w-full lg:h-full -z-10' />
-        </div>
-          <div className="w-full z-20 text-center px-4  h-[50vh] lg:h-[70vh] xl:h-[100vh] flex flex-col  justify-center ">
-            <h1 className="hidden md:block text-4xl md:text-5xl font-bold text-white mb-8 max-w-3xl mx-auto leading-tight ">
-            About Us
+        <section className="relative overflow-hidden xl:pb-20 bg-black w-[99vw]">
+          <div className="flex flex-col items-center justify-start pt-40 xl:pt-28 xl:justify-center min-h-[50vh] xl:min-h-[120vh] overflow-hidden xl:pb-28 pb-20 px-6 text-center">
+            
+            {/* Background Elements */}
+            <div className="absolute inset-0">
+              {/* Abstract Lines */}
+              <div className="absolute top-20 left-10 w-32 h-0.5 bg-gradient-to-r from-transparent via-white/20 to-transparent transform rotate-12"></div>
+              <div className="absolute top-40 right-20 w-24 h-0.5 bg-gradient-to-r from-transparent via-white/15 to-transparent transform -rotate-6"></div>
+              <div className="absolute bottom-40 left-1/4 w-40 h-0.5 bg-gradient-to-r from-transparent via-white/10 to-transparent transform rotate-45"></div>
+              
+              {/* Glowing Stars */}
+              <div className="absolute top-32 right-32 w-2 h-2 bg-white rounded-full opacity-60 animate-pulse z-10"></div>
+              <div className="absolute top-60 right-16 w-1 h-1 bg-white rounded-full opacity-40 animate-pulse delay-1000 z-10"></div>
+              <div className="absolute bottom-32 right-24 w-1.5 h-1.5 bg-white rounded-full opacity-50 animate-pulse delay-500 z-10"></div>
+              <div className="absolute top-80 right-40 w-1 h-1 bg-white rounded-full opacity-30 animate-pulse delay-2000 z-10"></div>
+            </div>
+
+            {/* Background Effect Images */}
+            <div className='absolute -top-[40%] xl:-right-[35%] md:-right-[90%] -right-[150%] z-0'>
+              <img src={'/Effect24.png'} alt="hero-bg" className='w-[60%] h-[50%] xl:w-full xl:h-full' />
+            </div>
+            <div className='absolute -bottom-[10%] xl:-left-[20%] md:-left-[50%] -left-[70%]'>
+              <img src={'/Effect25.png'} alt="hero-bg" className='w-[60%] h-[50%] lg:w-full lg:h-full' />
+            </div>
+            
+            {/* Circular Border Element */}
+            <div className="absolute left-1/2 -translate-x-1/2 -top-64 w-[70vw] h-[70vw] border-2 border-gray-500/20 rounded-[50%] transform"></div>
+            
+            <div className="w-full z-20 text-center px-4 h-[50vh] lg:h-[70vh] xl:h-[100vh] flex flex-col justify-center">
+            <h1 className="hero-text text-4xl md:text-5xl font-[500] text-white mb-8 max-w-3xl mx-auto leading-tight">
+              About Us
             </h1>
-            <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-tight font-manrope">
-            We designed this agent to think with you — not for you. It retrieves what matters, connects ideas, and keeps track of the story as it unfolds.
+            <p className="hero-text text-lg md:text-lg text-gray-300 mb-8 max-w-3xl mx-auto leading-tight font-manrope">
+              We designed this agent to think with you — not for you. It retrieves what matters, connects ideas, and keeps track of the story as it unfolds.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col hero-text sm:flex-row gap-4 justify-center">
                <Link 
                  href="/upload" 
                  className="relative bg-gradient-to-r from-[#8F72D0] to-[#347FB0] hover:from-[#7A5FBA] hover:to-[#2D6BA0] text-white px-8 py-4 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl overflow-hidden group"
@@ -54,11 +88,12 @@ export default function AboutPage() {
                  Try Demo
                </Link>
             </div>
+            </div>
           </div>
         </section>
 
         {/* Mission Section */}
-        <section className="py-20 px-2 ">
+        <section className="py-20 px-2 bg-black ">
           <div className="max-w-6xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
@@ -101,7 +136,7 @@ At its core, Evian learns from the documents, data, and ideas you share. It does
         </section>
 
         {/* Technology Section */}
-        <section className="py-20 px-4">
+        <section className="py-20 px-4 bg-black">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-4xl font-[600] text-white mb-6">Precision through simplicity</h2>
@@ -142,7 +177,7 @@ At its core, Evian learns from the documents, data, and ideas you share. It does
         </section>
 
         {/* Features Section */}
-        <section className="py-20 px-4">
+        <section className="py-20 px-4 bg-black">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-4xl font-[600] text-white mb-6">Why Choose EvianAI?</h2>

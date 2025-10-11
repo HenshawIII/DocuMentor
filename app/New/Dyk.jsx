@@ -53,17 +53,15 @@ const Dyk = () => {
           {/* Left Section - Main Content */}
           <div className="space-y-8 lg:sticky lg:top-[50px]">
             {/* Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
+            <h1 className="text-4xl lg:max-w-xl max-w-md sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
               Do you know how RAG works ?
             </h1>
             
             {/* Description */}
-            <p className="text-lg sm:text-xl text-white leading-relaxed max-w-2xl font-manrope">
+            <p className="text-lg sm:text-xl text-white leading-relaxed max-w-xl font-manrope">
             Retrieval-Augmented Generation (RAG) lets Evian remember and reason with your own information.
-When you ask a question, Evian retrieves the most relevant pieces from your documents , then forms precise, grounded responses.
+When you ask a question, Evian retrieves the most relevant pieces from your documents , then forms precise responses.
 
-It’s not guessing.
-It’s retrieving, connecting, and generating — all in one motion.
             </p>
             
             {/* CTA Button */}
@@ -142,8 +140,8 @@ Once inside, EvianAI begins building a memory tailored to you — not a dataset,
                 {/* Description */}
                 <p className="text-gray-300 leading-relaxed font-manrope">
                 Ask, compare, challenge, and explore. Evian retrieves the most relevant ideas from your data, merges them with its internal reasoning, and returns responses that grow sharper over time.
-Each question shapes understanding; each answer reshapes memory.
-Evian doesn’t just remember — it refines.
+
+
                 </p>
               </div>
             </div>
