@@ -33,9 +33,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <title>DocuMentor - Document Intelligence Platform</title>
+        <title>EvianAI - Document Intelligence Platform</title>
         <link rel="icon" href="/doc.png" />
-        <meta name="description" content="Upload documents and chat with them using AI" />
+        <meta name="description" content="Upload documents and gain in depth insight with Evian." />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${manrope.variable} antialiased`}
