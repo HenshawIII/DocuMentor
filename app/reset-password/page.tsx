@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import supabase from '@/app/supabase';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Navbar from '@/app/New/Navbar';
 
 export default function ResetPasswordForm() {
@@ -12,7 +12,7 @@ export default function ResetPasswordForm() {
   const [message, setMessage] = useState('');
   const [isValidSession, setIsValidSession] = useState(false);
   const router = useRouter();
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
 
   useEffect(() => {
     const checkSession = async () => {
